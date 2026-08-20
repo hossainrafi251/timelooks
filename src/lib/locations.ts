@@ -68,7 +68,7 @@ export function isInsideDhaka(district: string) {
 const BN_DIGITS = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
 
 export function bn(value: number | string) {
-  return String(value).replace(/\d/g, (d) => BN_DIGITS[Number(d)]);
+  return String(value).replace(/\d/g, (d) => BN_DIGITS[Number(d)] ?? d);
 }
 
 export const STATUS_BN: Record<string, string> = {

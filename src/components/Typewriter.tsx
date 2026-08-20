@@ -11,7 +11,7 @@ export function Typewriter({ words, className }: TypewriterProps) {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    const current = words[index % words.length];
+    const current = words[index % words.length] ?? "";
     const done = !deleting && text === current;
     const empty = deleting && text === "";
 
