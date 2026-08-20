@@ -10,10 +10,35 @@ export function AdminLogin({ onSignedIn }: { onSignedIn: () => void }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [mode, setMode] = useState<"login" | "setup">("login");
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
+
+    if (mode === "setup") {
+      const { error: signUpError } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { emailRedirectTo: window.location.origin + "/admin" },
+      });
+      if (signUpError) {
+        setLoading(false);
+        toast.error("অ্যাকাউন্ট তৈরি ব্যর্থ: " + signUpError.message);
+        return;
+      }
+      await supabase.auth.signInWithPassword({ email, password });
+      const { data: claimed } = await supabase.rpc("claim_admin");
+      setLoading(false);
+      if (!claimed) {
+        toast.error("অ্যাডমিন অ্যাকাউন্ট আগেই তৈরি করা আছে");
+        return;
+      }
+      toast.success("অ্যাডমিন অ্যাকাউন্ট তৈরি হয়েছে");
+      onSignedIn();
+      return;
+    }
+
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
     if (error) {
