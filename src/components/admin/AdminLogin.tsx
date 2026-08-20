@@ -56,7 +56,9 @@ export function AdminLogin({ onSignedIn }: { onSignedIn: () => void }) {
             <Lock className="size-5 text-primary-foreground" />
           </span>
           <h1 className="mt-4 text-xl font-bold tracking-[0.2em]">TIMELOOKS</h1>
-          <p className="text-xs text-muted-foreground">অ্যাডমিন প্যানেল লগইন</p>
+          <p className="text-xs text-muted-foreground">
+            {mode === "login" ? "অ্যাডমিন প্যানেল লগইন" : "প্রথমবার অ্যাডমিন অ্যাকাউন্ট তৈরি"}
+          </p>
         </div>
         <input
           className={inputClass}
