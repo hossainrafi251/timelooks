@@ -80,7 +80,16 @@ export function AdminLogin({ onSignedIn }: { onSignedIn: () => void }) {
           className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3 font-bold text-primary-foreground disabled:opacity-60"
         >
           {loading && <Loader2 className="size-4 animate-spin" />}
-          লগইন
+          {mode === "login" ? "লগইন" : "অ্যাকাউন্ট তৈরি করুন"}
+        </button>
+        <button
+          type="button"
+          onClick={() => setMode(mode === "login" ? "setup" : "login")}
+          className="w-full text-center text-xs text-muted-foreground hover:text-foreground"
+        >
+          {mode === "login"
+            ? "প্রথমবার সেটআপ করছেন? অ্যাডমিন অ্যাকাউন্ট তৈরি করুন"
+            : "ইতিমধ্যে অ্যাকাউন্ট আছে? লগইন করুন"}
         </button>
       </form>
     </div>
